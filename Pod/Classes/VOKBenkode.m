@@ -7,6 +7,8 @@
 
 #import "VOKBenkode.h"
 
+NSString *const VOKBenkodeErrorDomain = @"com.vokalinteractive.VOKBenkode";
+
 static char const NumberStartDelimiter = 'i';
 static char const ArrayStartDelimiter = 'l';
 static char const DictionaryStartDelimiter = 'd';
@@ -78,8 +80,11 @@ static char const StringLengthDataSeparator = ':';
         return result;
     }
     
+    // Unknown data type.
     if (error) {
-        // TODO: set error object
+        *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                     code:VOKBenkodeErrorUnknownDataType
+                                 userInfo:nil];
     }
     return nil;
 }
@@ -150,7 +155,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
             
         default:
             if (error) {
-                // TODO: set error object
+                *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                             code:VOKBenkodeErrorUnknownDataType
+                                         userInfo:nil];
             }
             return nil;
     }
@@ -229,7 +236,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
     }
     if (index >= data.length) {
         if (error) {
-            // TODO: set error object
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorMissingEndingDelimiter
+                                     userInfo:nil];
         }
         return nil;
     }
@@ -267,7 +276,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
     }
     if (index >= data.length) {
         if (error) {
-            // TODO: set error object
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorMissingEndingDelimiter
+                                     userInfo:nil];
         }
         return nil;
     }
@@ -292,7 +303,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
     }
     if (index >= data.length) {
         if (error) {
-            // TODO: set error object
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorMissingEndingDelimiter
+                                     userInfo:nil];
         }
         return nil;
     }
@@ -317,14 +330,18 @@ stringEncoding:(NSStringEncoding)stringEncoding
     }
     if (index >= data.length) {
         if (error) {
-            // TODO: set error object
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorStringMissingColon
+                                     userInfo:nil];
         }
         return nil;
     }
     long long stringLength = [buffer longLongValue];
     if (stringLength < 0) {
         if (error) {
-            // TODO: set error object
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorStringLengthNegative
+                                     userInfo:nil];
         }
         return nil;
     }
@@ -332,7 +349,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
     NSUInteger localLength = index + stringLength;
     if (localLength > data.length) {
         if (error) {
-            // TODO: set error object
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorStringLengthExceedsData
+                                     userInfo:nil];
         }
         return nil;
     }

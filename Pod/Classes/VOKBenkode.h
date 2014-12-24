@@ -7,6 +7,16 @@
 
 #import <Foundation/Foundation.h>
 
+FOUNDATION_EXPORT NSString *const VOKBenkodeErrorDomain;
+
+enum {
+    VOKBenkodeErrorUnknownDataType,
+    VOKBenkodeErrorMissingEndingDelimiter,
+    VOKBenkodeErrorStringMissingColon,
+    VOKBenkodeErrorStringLengthNegative,
+    VOKBenkodeErrorStringLengthExceedsData,
+} VOKBenkodeErrorCodes;
+
 @interface VOKBenkode : NSObject
 
 + (NSData *)encode:(id)obj
