@@ -39,7 +39,9 @@ static char const StringLengthDataSeparator = ':';
                          stringEncoding:stringEncoding
                                   error:&innerError];
             if (!data) {
-                // TODO: bubble up innerError -> error.
+                if (error) {
+                    *error = innerError;
+                }
                 return nil;
             }
             [result appendData:data];
@@ -55,7 +57,9 @@ static char const StringLengthDataSeparator = ':';
                          stringEncoding:stringEncoding
                                   error:&innerError];
             if (!data) {
-                // TODO: bubble up innerError -> error.
+                if (error) {
+                    *error = innerError;
+                }
                 return nil;
             }
             [result appendData:data];
@@ -63,7 +67,9 @@ static char const StringLengthDataSeparator = ':';
                  stringEncoding:stringEncoding
                           error:&innerError];
             if (!data) {
-                // TODO: bubble up innerError -> error.
+                if (error) {
+                    *error = innerError;
+                }
                 return nil;
             }
             [result appendData:data];
@@ -202,7 +208,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
                              error:&innerError
                             length:&innerLength];
         if (!innerKey) {
-            // TODO: bubble up innerError -> error.
+            if (error) {
+                *error = innerError;
+            }
             return nil;
         }
         index += innerLength;
@@ -211,7 +219,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
                                error:&innerError
                               length:&innerLength];
         if (!innerValue) {
-            // TODO: bubble up innerError -> error.
+            if (error) {
+                *error = innerError;
+            }
             return nil;
         }
         result[innerKey] = innerValue;
@@ -247,7 +257,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
                                 error:&innerError
                                length:&innerLength];
         if (!innerObject) {
-            // TODO: bubble up innerError -> error.
+            if (error) {
+                *error = innerError;
+            }
             return nil;
         }
         [result addObject:innerObject];
