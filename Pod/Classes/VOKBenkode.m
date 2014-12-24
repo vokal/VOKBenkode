@@ -7,6 +7,12 @@
 
 #import "VOKBenkode.h"
 
+static char const NumberStartDelimiter = 'i';
+static char const ArrayStartDelimiter = 'l';
+static char const DictionaryStartDelimiter = 'd';
+static char const EndDelimiter = 'e';
+static char const StringLengthDataSeparator = ':';
+
 @implementation VOKBenkode
 
 #pragma mark - Encoding
@@ -16,13 +22,17 @@
              error:(NSError **)error
 {
     if ([obj isKindOfClass:[NSNumber class]]) {
-        return [[NSString stringWithFormat:@"i%lde", [obj longValue]] dataUsingEncoding:NSASCIIStringEncoding];
-    } else if ([obj isKindOfClass:[NSString class]]) {
-        NSMutableData *result = [[[NSString stringWithFormat:@"%@:", @([obj length])] dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
+        return [[NSString stringWithFormat:@"%c%ld%c", NumberStartDelimiter, [obj longValue], EndDelimiter]
+                dataUsingEncoding:NSASCIIStringEncoding];
+    }
+    if ([obj isKindOfClass:[NSString class]]) {
+        NSMutableData *result = [[[NSString stringWithFormat:@"%@%c", @([obj length]), StringLengthDataSeparator]
+                                  dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
         [result appendData:[obj dataUsingEncoding:stringEncoding]];
         return result;
-    } else if ([obj isKindOfClass:[NSArray class]]) {
-        NSMutableData *result = [NSMutableData dataWithBytes:"l" length:1];
+    }
+    if ([obj isKindOfClass:[NSArray class]]) {
+        NSMutableData *result = [NSMutableData dataWithBytes:&ArrayStartDelimiter length:1];
         for (id innerObj in obj) {
             NSError *innerError;
             NSData *data = [self encode:innerObj
@@ -34,10 +44,11 @@
             }
             [result appendData:data];
         }
-        [result appendBytes:"e" length:1];
+        [result appendBytes:&EndDelimiter length:1];
         return result;
-    } else if ([obj isKindOfClass:[NSDictionary class]]) {
-        NSMutableData *result = [NSMutableData dataWithBytes:"d" length:1];
+    }
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+        NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
         for (id key in obj) {
             NSError *innerError;
             NSData *data = [self encode:key
@@ -57,14 +68,14 @@
             }
             [result appendData:data];
         }
-        [result appendBytes:"e" length:1];
+        [result appendBytes:&EndDelimiter length:1];
         return result;
-    } else {
-        if (error) {
-            // TODO: set error object
-        }
-        return nil;
     }
+    
+    if (error) {
+        // TODO: set error object
+    }
+    return nil;
 }
 
 + (NSData *)encode:(id)obj
@@ -99,19 +110,19 @@ stringEncoding:(NSStringEncoding)stringEncoding
     char *dataBytes = (char *)data.bytes;
     char firstByte = dataBytes[0];
     switch (firstByte) {
-        case 'd':
+        case DictionaryStartDelimiter:
             return [self decodeDict:data
                      stringEncoding:stringEncoding
                               error:error
                              length:length];
             
-        case 'l':
+        case ArrayStartDelimiter:
             return [self decodeArray:data
                       stringEncoding:stringEncoding
                                error:error
                               length:length];
             
-        case 'i':
+        case NumberStartDelimiter:
             return [self decodeNumber:data
                                 error:error
                                length:length];
@@ -179,11 +190,11 @@ stringEncoding:(NSStringEncoding)stringEncoding
                       length:(NSUInteger *)length
 {
     char *dataBytes = (char *)data.bytes;
-    NSAssert(dataBytes[0] == 'd', @"Data does not begin with dictionary-data indicator.");
+    NSAssert(dataBytes[0] == DictionaryStartDelimiter, @"Data does not begin with dictionary-data indicator.");
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     NSUInteger index = 1;
     while (index < data.length
-           && dataBytes[index] != 'e') {
+           && dataBytes[index] != EndDelimiter) {
         NSError *innerError;
         NSUInteger innerLength;
         id innerKey = [self decode:[data subdataWithRange:NSMakeRange(index, data.length - index)]
@@ -213,7 +224,7 @@ stringEncoding:(NSStringEncoding)stringEncoding
         return nil;
     }
     if (length) {
-        *length = index + 1;  // +1 for the 'e' at the end.
+        *length = index + 1;  // +1 for the EndDelimiter at the end.
     }
     return result;
 }
@@ -224,11 +235,11 @@ stringEncoding:(NSStringEncoding)stringEncoding
                   length:(NSUInteger *)length
 {
     char *dataBytes = (char *)data.bytes;
-    NSAssert(dataBytes[0] == 'l', @"Data does not begin with array-data indicator.");
+    NSAssert(dataBytes[0] == ArrayStartDelimiter, @"Data does not begin with array-data indicator.");
     NSMutableArray *result = [NSMutableArray array];
     NSUInteger index = 1;
     while (index < data.length
-           && dataBytes[index] != 'e') {
+           && dataBytes[index] != EndDelimiter) {
         NSError *innerError;
         NSUInteger innerLength;
         id innerObject = [self decode:[data subdataWithRange:NSMakeRange(index, data.length - index)]
@@ -249,7 +260,7 @@ stringEncoding:(NSStringEncoding)stringEncoding
         return nil;
     }
     if (length) {
-        *length = index + 1;  // +1 for the 'e' at the end.
+        *length = index + 1;  // +1 for the EndDelimiter at the end.
     }
     return result;
 }
@@ -259,11 +270,11 @@ stringEncoding:(NSStringEncoding)stringEncoding
                     length:(NSUInteger *)length
 {
     char *dataBytes = (char *)data.bytes;
-    NSAssert(dataBytes[0] == 'i', @"Data does not begin with numeric-data indicator.");
+    NSAssert(dataBytes[0] == NumberStartDelimiter, @"Data does not begin with numeric-data indicator.");
     NSMutableString *buffer = [NSMutableString stringWithCapacity:data.length - 2];
     NSUInteger index = 1;
     while (index < data.length
-           && dataBytes[index] != 'e') {
+           && dataBytes[index] != EndDelimiter) {
         [buffer appendFormat:@"%c", dataBytes[index]];
         index++;
     }
@@ -274,7 +285,7 @@ stringEncoding:(NSStringEncoding)stringEncoding
         return nil;
     }
     if (length) {
-        *length = index + 1;  // +1 for the 'e' at the end.
+        *length = index + 1;  // +1 for the EndDelimiter at the end.
     }
     return [NSNumber numberWithLongLong:[buffer longLongValue]];
 }
@@ -288,7 +299,7 @@ stringEncoding:(NSStringEncoding)stringEncoding
     NSMutableString *buffer = [NSMutableString stringWithCapacity:data.length - 2];
     NSUInteger index = 0;
     while (index < data.length
-           && dataBytes[index] != ':') {
+           && dataBytes[index] != StringLengthDataSeparator) {
         [buffer appendFormat:@"%c", dataBytes[index]];
         index++;
     }
@@ -305,7 +316,7 @@ stringEncoding:(NSStringEncoding)stringEncoding
         }
         return nil;
     }
-    index++;  // +1 for the ':' between the length and the string.
+    index++;  // +1 for the StringLengthDataSeparator between the length and the string.
     NSUInteger localLength = index + stringLength;
     if (localLength > data.length) {
         if (error) {
