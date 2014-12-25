@@ -61,6 +61,7 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeBasicTests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		71FB774E1A4C9AC400A68427 /* VOKBenkodeAssert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKBenkodeAssert.h; sourceTree = "<group>"; };
 		8A61E8EFC9FCBB0713ADA3D5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		9847B718F456374AEA42835B /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC00C6754A504A6641EEAC51 /* VOKBenkode.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = VOKBenkode.podspec; path = ../VOKBenkode.podspec; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				71FB774E1A4C9AC400A68427 /* VOKBenkodeAssert.h */,
 				6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);

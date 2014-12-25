@@ -10,6 +10,8 @@
 
 #import <VOKBenkode.h>
 
+#import "VOKBenkodeAssert.h"
+
 @interface VOKBenkodeBasicTests : XCTestCase
 
 @end
@@ -20,66 +22,50 @@
 
 - (void)test_mjackson_1
 {
-    NSString *original = @"hello world";
-    NSData *encoded = [@"11:hello world" dataUsingEncoding:NSUTF8StringEncoding];
-    XCTAssertEqualObjects([VOKBenkode encode:original], encoded);
-    XCTAssertEqualObjects([VOKBenkode decode:encoded], original);
-    XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original);
+    AssertOriginalMatchesEncodedString(@"hello world", @"11:hello world");
 }
 
 - (void)test_mjackson_2
 {
-    NSNumber *original = @123;
-    NSData *encoded = [@"i123e" dataUsingEncoding:NSUTF8StringEncoding];
-    XCTAssertEqualObjects([VOKBenkode encode:original], encoded);
-    XCTAssertEqualObjects([VOKBenkode decode:encoded], original);
-    XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original);
+    AssertOriginalMatchesEncodedString(@123, @"i123e");
 }
 
 - (void)test_mjackson_3
 {
-    NSArray *original = @[ @1, @2, @3, ];
-    NSData *encoded = [@"li1ei2ei3ee" dataUsingEncoding:NSUTF8StringEncoding];
-    XCTAssertEqualObjects([VOKBenkode encode:original], encoded);
-    XCTAssertEqualObjects([VOKBenkode decode:encoded], original);
-    XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original);
+    AssertOriginalMatchesEncodedString((@[ @1, @2, @3, ]), @"li1ei2ei3ee");
 }
 
 - (void)test_mjackson_4
 {
-    NSDictionary *original = @{
-                               @"a": @"b",
-                               @"c": @"def",
-                               };
-    NSData *encoded = [@"d1:a1:b1:c3:defe" dataUsingEncoding:NSUTF8StringEncoding];
-    XCTAssertEqualObjects([VOKBenkode encode:original], encoded);
-    XCTAssertEqualObjects([VOKBenkode decode:encoded], original);
-    XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original);
+    AssertOriginalMatchesEncodedString((@{
+                                          @"a": @"b",
+                                          @"c": @"def",
+                                          }),
+                                       @"d1:a1:b1:c3:defe");
 }
 
 #pragma mark - Test Cases from https://github.com/rgrinberg/bencode/blob/master/lib_test/test_ounit.ml
 
 - (void)test_rgrinberg_1
 {
-    NSArray *original = @[ @42, @0, @(-200), ];
-    NSData *encoded = [@"li42ei0ei-200ee" dataUsingEncoding:NSUTF8StringEncoding];
-    XCTAssertEqualObjects([VOKBenkode encode:original], encoded);
-    XCTAssertEqualObjects([VOKBenkode decode:encoded], original);
-    XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original);
+    AssertOriginalMatchesEncodedString((@[ @42, @0, @(-200), ]),
+                                       @"li42ei0ei-200ee");
 }
 
 - (void)test_rgrinberg_2
 {
-    NSDictionary *original = @{
-                               @"foo": @42,
-                               @"bar": @[ @0, @"caramba si", ],
-                               @"": @"",
-                               };
-    XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original);
+    AssertOriginalMatchesEncodedString((@{
+                                          @"foo": @42,
+                                          @"bar": @[ @0, @"caramba si", ],
+                                          @"": @"",
+                                          }),
+                                       @"d0:0:3:barli0e10:caramba sie3:fooi42ee");
 }
 
 - (void)test_rgrinberg_3
 {
+    // Because of the null character (\x00), this cannot be expressed in an NSString that will convert to/from NSData,
+    // so can't be checked against an expected encoded string.
     NSDictionary *original = @{
                                @"a": @1,
                                @"b": @"bbbb",
