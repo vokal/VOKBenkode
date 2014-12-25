@@ -59,7 +59,8 @@ static char const StringLengthDataSeparator = ':';
     }
     if ([obj isKindOfClass:[NSDictionary class]]) {
         NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
-        for (id key in obj) {
+        NSArray *sortedKeys = [[obj allKeys] sortedArrayUsingSelector:@selector(compare:)];
+        for (id key in sortedKeys) {
             NSError *innerError;
             NSData *data = [self encode:key
                          stringEncoding:stringEncoding
