@@ -61,6 +61,16 @@ static char const StringLengthDataSeparator = ':';
         NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
         NSArray *sortedKeys = [[obj allKeys] sortedArrayUsingSelector:@selector(compare:)];
         for (id key in sortedKeys) {
+            if (!([key isKindOfClass:[NSString class]]
+                  || [key isKindOfClass:[NSData class]])) {
+                // The bencode spec says dictionary keys must be strings (NSData ~= bytestring, so...).
+                if (error) {
+                    *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                                 code:VOKBenkodeErrorDictionaryKeyNotString
+                                             userInfo:nil];
+                }
+                return nil;
+            }
             NSError *innerError;
             NSData *data = [self encode:key
                          stringEncoding:stringEncoding
@@ -224,6 +234,15 @@ stringEncoding:(NSStringEncoding)stringEncoding
         if (!innerKey) {
             if (error) {
                 *error = innerError;
+            }
+            return nil;
+        }
+        if (![innerKey isKindOfClass:[NSString class]]) {
+            // Accoding to the bencode spec, dictionary keys must be strings.
+            if (error) {
+                *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                             code:VOKBenkodeErrorDictionaryKeyNotString
+                                         userInfo:nil];
             }
             return nil;
         }

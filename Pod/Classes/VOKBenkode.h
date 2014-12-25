@@ -15,6 +15,7 @@ enum {
     VOKBenkodeErrorStringMissingColon,
     VOKBenkodeErrorStringLengthNegative,
     VOKBenkodeErrorStringLengthExceedsData,
+    VOKBenkodeErrorDictionaryKeyNotString,
 } VOKBenkodeErrorCodes;
 
 @interface VOKBenkode : NSObject
