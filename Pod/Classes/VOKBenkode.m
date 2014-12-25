@@ -23,15 +23,21 @@ static char const StringLengthDataSeparator = ':';
     stringEncoding:(NSStringEncoding)stringEncoding
              error:(NSError **)error
 {
-    if ([obj isKindOfClass:[NSNumber class]]) {
-        return [[NSString stringWithFormat:@"%c%ld%c", NumberStartDelimiter, [obj longValue], EndDelimiter]
-                dataUsingEncoding:NSASCIIStringEncoding];
+    if ([obj isKindOfClass:[NSData class]]) {
+        NSMutableData *result = [[[NSString stringWithFormat:@"%@%c", @([obj length]), StringLengthDataSeparator]
+                                  dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
+        [result appendData:obj];
+        return result;
     }
     if ([obj isKindOfClass:[NSString class]]) {
         NSMutableData *result = [[[NSString stringWithFormat:@"%@%c", @([obj length]), StringLengthDataSeparator]
                                   dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
         [result appendData:[obj dataUsingEncoding:stringEncoding]];
         return result;
+    }
+    if ([obj isKindOfClass:[NSNumber class]]) {
+        return [[NSString stringWithFormat:@"%c%ld%c", NumberStartDelimiter, [obj longValue], EndDelimiter]
+                dataUsingEncoding:NSASCIIStringEncoding];
     }
     if ([obj isKindOfClass:[NSArray class]]) {
         NSMutableData *result = [NSMutableData dataWithBytes:&ArrayStartDelimiter length:1];
