@@ -322,11 +322,35 @@ stringEncoding:(NSStringEncoding)stringEncoding
     NSAssert(dataBytes[0] == NumberStartDelimiter, @"Data does not begin with numeric-data indicator.");
     NSMutableString *buffer = [NSMutableString stringWithCapacity:data.length - 2];
     NSUInteger index = 1;
+    BOOL hasSeenDigit = NO;
+    static NSCharacterSet *asciiDigits;
+    if (!asciiDigits) {
+        asciiDigits = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
+    }
     while (index < data.length
            && dataBytes[index] != EndDelimiter) {
-        [buffer appendFormat:@"%c", dataBytes[index]];
+        char byte = dataBytes[index];
+        
+        // Check format validity.
+        if ([asciiDigits characterIsMember:byte]) {
+            hasSeenDigit = YES;
+        } else {
+            if (hasSeenDigit || (byte != '+' && byte != '-')) {
+                if (error) {
+                    *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                                 code:VOKBenkodeErrorNumberInvalid
+                                             userInfo:nil];
+                }
+                return nil;
+            }
+        }
+        
+        // Append to the buffer to be interpreted later.
+        [buffer appendFormat:@"%c", byte];
         index++;
     }
+    
+    // Did we hit the end of the input?
     if (index >= data.length) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
@@ -335,6 +359,18 @@ stringEncoding:(NSStringEncoding)stringEncoding
         }
         return nil;
     }
+    
+    // Did we get actual digits that weren't unnecessarily zero-padded?
+    if (![buffer stringByTrimmingCharactersInSet:[asciiDigits invertedSet]].length
+        || (buffer.length > 1 && [buffer characterAtIndex:0] == '0')) {
+        if (error) {
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorNumberInvalid
+                                     userInfo:nil];
+        }
+        return nil;
+    }
+    
     if (length) {
         *length = index + 1;  // +1 for the EndDelimiter at the end.
     }
