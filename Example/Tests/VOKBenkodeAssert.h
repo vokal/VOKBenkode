@@ -18,5 +18,13 @@
         XCTAssertEqualObjects([VOKBenkode decode:[VOKBenkode encode:original]], original); \
     })
 
+#define AssertDecodingProducesError(__encodedString) \
+    ({ \
+        NSData *encoded = [(__encodedString) dataUsingEncoding:NSUTF8StringEncoding]; \
+        NSError *error; \
+        id decoded = [VOKBenkode decode:encoded error:&error]; \
+        XCTAssertNil(decoded); \
+        XCTAssertNotNil(error); \
+    })
 
 #endif
