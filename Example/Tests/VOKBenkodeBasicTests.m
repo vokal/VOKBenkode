@@ -10,11 +10,11 @@
 
 #import <VOKBenkode.h>
 
-@interface VOKBenkodeTests : XCTestCase
+@interface VOKBenkodeBasicTests : XCTestCase
 
 @end
 
-@implementation VOKBenkodeTests
+@implementation VOKBenkodeBasicTests
 
 #pragma mark - Test Cases from https://github.com/mjackson/bencode/blob/master/tests/Bencode.php
 
