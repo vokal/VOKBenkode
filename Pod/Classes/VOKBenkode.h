@@ -18,6 +18,7 @@ enum {
     VOKBenkodeErrorStringLengthMalformed,
     VOKBenkodeErrorStringLengthExceedsData,
     VOKBenkodeErrorDictionaryKeyNotString,
+    VOKBenkodeErrorDictionaryDuplicateKey,
     VOKBenkodeErrorNumberInvalid,
 } VOKBenkodeErrorCodes;
 

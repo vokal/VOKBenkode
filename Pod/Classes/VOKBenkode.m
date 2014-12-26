@@ -245,6 +245,8 @@ stringEncoding:(NSStringEncoding)stringEncoding
             }
             return nil;
         }
+        
+        // Is the key a string?
         if (![innerKey isKindOfClass:[NSString class]]) {
             // Accoding to the bencode spec, dictionary keys must be strings.
             if (error) {
@@ -254,6 +256,17 @@ stringEncoding:(NSStringEncoding)stringEncoding
             }
             return nil;
         }
+        
+        // Do we already have a value for this key?
+        if (result[innerKey]) {
+            if (error) {
+                *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                             code:VOKBenkodeErrorDictionaryDuplicateKey
+                                         userInfo:nil];
+            }
+            return nil;
+        }
+        
         index += innerLength;
         id innerValue = [self decode:[data subdataWithRange:NSMakeRange(index, data.length - index)]
                       stringEncoding:stringEncoding
