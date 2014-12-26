@@ -19,3 +19,12 @@ it, simply add the following line to your Podfile:
 ## License
 
 VOKBenkode is available under the MIT. See the LICENSE file for more info.
+
+## Unit Tests
+
+Test cases culled from:
+- [Αριστοτέλης Παγκαλτζής's perl Bencode module](http://search.cpan.org/dist/Bencode/)
+- [Michael J. I. Jackson's PHP Bencode library](https://github.com/mjackson/bencode/)
+- [Rudi Grinberg's OCaml Bencode reader/writer](https://github.com/rgrinberg/bencode/)
+- [Petr Zemek's C++ bencoding library](https://github.com/s3rvac/cpp-bencoding/)
+- [libtransmission](https://trac.transmissionbt.com/browser/trunk/libtransmission/)
