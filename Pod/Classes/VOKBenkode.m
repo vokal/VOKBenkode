@@ -135,6 +135,14 @@ stringEncoding:(NSStringEncoding)stringEncoding
        error:(NSError **)error
       length:(NSUInteger *)length
 {
+    if (!data.length) {
+        if (error) {
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorEmptyData
+                                     userInfo:nil];
+        }
+        return nil;
+    }
     char *dataBytes = (char *)data.bytes;
     char firstByte = dataBytes[0];
     switch (firstByte) {
