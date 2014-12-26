@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/VOKBenkode.svg?style=flat)](http://cocoadocs.org/docsets/VOKBenkode)
 [![Platform](https://img.shields.io/cocoapods/p/VOKBenkode.svg?style=flat)](http://cocoadocs.org/docsets/VOKBenkode)
 
+VOKBenkode provides [bencoding/bdecoding](https://wiki.theory.org/BitTorrentSpecification#Bencoding) in Objective-C.
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
