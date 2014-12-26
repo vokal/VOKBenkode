@@ -383,7 +383,9 @@ stringEncoding:(NSStringEncoding)stringEncoding
     
     // Did we get actual digits that weren't unnecessarily zero-padded?
     if (![buffer stringByTrimmingCharactersInSet:[asciiDigits invertedSet]].length
-        || (buffer.length > 1 && [buffer characterAtIndex:0] == '0')) {
+        || (buffer.length > 1 && [buffer characterAtIndex:0] == '0')
+        || [buffer hasPrefix:@"-0"]
+        ) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
                                          code:VOKBenkodeErrorNumberInvalid
