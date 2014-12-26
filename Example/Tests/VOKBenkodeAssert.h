@@ -27,4 +27,13 @@
         XCTAssertNotNil(error); \
     })
 
+#define AssertBencodedStringAndJsonStringYieldEqualObjects(__encodedString, __jsonString) \
+    ({ \
+        id bdecoded = [VOKBenkode decode:[(__encodedString) dataUsingEncoding:NSUTF8StringEncoding]]; \
+        id json = [NSJSONSerialization JSONObjectWithData:[(__jsonString) dataUsingEncoding:NSUTF8StringEncoding] \
+                                                  options:NSJSONReadingAllowFragments \
+                                                    error:NULL]; \
+        XCTAssertEqualObjects(bdecoded, json); \
+    })
+
 #endif
