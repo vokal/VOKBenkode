@@ -15,6 +15,7 @@ enum {
     VOKBenkodeErrorMissingEndingDelimiter,
     VOKBenkodeErrorStringMissingColon,
     VOKBenkodeErrorStringLengthNegative,
+    VOKBenkodeErrorStringLengthMalformed,
     VOKBenkodeErrorStringLengthExceedsData,
     VOKBenkodeErrorDictionaryKeyNotString,
     VOKBenkodeErrorNumberInvalid,

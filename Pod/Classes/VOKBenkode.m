@@ -398,6 +398,8 @@ stringEncoding:(NSStringEncoding)stringEncoding
         [buffer appendFormat:@"%c", dataBytes[index]];
         index++;
     }
+    
+    // Did we hit the end of the input?
     if (index >= data.length) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
@@ -407,6 +409,8 @@ stringEncoding:(NSStringEncoding)stringEncoding
         return nil;
     }
     long long stringLength = [buffer longLongValue];
+    
+    // Is the string length negative?
     if (stringLength < 0) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
@@ -415,8 +419,20 @@ stringEncoding:(NSStringEncoding)stringEncoding
         }
         return nil;
     }
+    
+    // Is the string length properly formatted (no leading 0s, etc.)?
+    if (![buffer isEqualToString:[NSString stringWithFormat:@"%lld", stringLength]]) {
+        if (error) {
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorStringLengthMalformed
+                                     userInfo:nil];
+        }
+        return nil;
+    }
     index++;  // +1 for the StringLengthDataSeparator between the length and the string.
     NSUInteger localLength = index + stringLength;
+    
+    // Does the expected length of the string itself exceed the input?
     if (localLength > data.length) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
@@ -425,6 +441,7 @@ stringEncoding:(NSStringEncoding)stringEncoding
         }
         return nil;
     }
+    
     if (length) {
         *length = localLength;
     }
