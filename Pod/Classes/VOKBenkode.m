@@ -423,10 +423,19 @@ stringEncoding:(NSStringEncoding)stringEncoding
         }
         return nil;
     }
-    long long stringLength = [buffer longLongValue];
+    long long llStringLength = [buffer longLongValue];
+    // Is the string length beyond what can be represented in an NSUInteger?  (NSMakeRange takes NSUInteger inputs, so...)
+    if (llStringLength > NSUIntegerMax) {
+        if (error) {
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorStringLengthExceedesNSUIntegerMax
+                                     userInfo:nil];
+        }
+        return nil;
+    }
     
     // Is the string length negative?
-    if (stringLength < 0) {
+    if (llStringLength < 0) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
                                          code:VOKBenkodeErrorStringLengthNegative
@@ -435,8 +444,11 @@ stringEncoding:(NSStringEncoding)stringEncoding
         return nil;
     }
     
+    // Safe to cast to NSUInteger (in the interval [0, NSUIntegerMax]).
+    NSUInteger stringLength = (NSUInteger)llStringLength;
+    
     // Is the string length properly formatted (no leading 0s, etc.)?
-    if (![buffer isEqualToString:[NSString stringWithFormat:@"%lld", stringLength]]) {
+    if (![buffer isEqualToString:[NSString stringWithFormat:@"%@", @(stringLength)]]) {
         if (error) {
             *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
                                          code:VOKBenkodeErrorStringLengthMalformed

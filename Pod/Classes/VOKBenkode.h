@@ -23,6 +23,8 @@ enum {
     VOKBenkodeErrorStringMissingColon,
     /// Read an apparently-negative string length.
     VOKBenkodeErrorStringLengthNegative,
+    /// Read a string length that exceeded NSUIntegerMax.
+    VOKBenkodeErrorStringLengthExceedesNSUIntegerMax,
     /// Read a malformed string length.
     VOKBenkodeErrorStringLengthMalformed,
     /// The length of the string indicates more data than was passed in.
