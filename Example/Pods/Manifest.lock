@@ -1,0 +1,14 @@
+PODS:
+  - VOKBenkode (0.1.0)
+
+DEPENDENCIES:
+  - VOKBenkode (from `../`)
+
+EXTERNAL SOURCES:
+  VOKBenkode:
+    :path: ../
+
+SPEC CHECKSUMS:
+  VOKBenkode: 9392f045770934144a11182d07629a711a5b1280
+
+COCOAPODS: 0.34.4
