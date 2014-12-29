@@ -20,7 +20,7 @@ it, simply add the following line to your Podfile:
 
 ## License
 
-VOKBenkode is available under the MIT. See the LICENSE file for more info.
+VOKBenkode is available under the MIT. See [the LICENSE file](LICENSE) for more info.
 
 ## Unit Tests
 
