@@ -57,11 +57,14 @@ static char const StringLengthDataSeparator = ':';
         return result;
     }
     if ([obj isKindOfClass:[NSDictionary class]]) {
-        NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
-        NSArray *sortedKeys = [[obj allKeys] sortedArrayUsingSelector:@selector(compare:)];
-        for (id key in sortedKeys) {
-            if (!([key isKindOfClass:[NSString class]]
-                  || [key isKindOfClass:[NSData class]])) {
+        // Construct a dictionary mapping each key to its NSData representation.
+        NSMutableDictionary *keyDataByKey = [NSMutableDictionary dictionaryWithCapacity:[obj count]];
+        for (id key in obj) {
+            if ([key isKindOfClass:[NSData class]]) {
+                keyDataByKey[key] = key;
+            } else if ([key isKindOfClass:[NSString class]]) {
+                keyDataByKey[key] = [key dataUsingEncoding:stringEncoding];
+            } else {
                 // The bencode spec says dictionary keys must be strings (NSData ~= bytestring, so...).
                 if (error) {
                     *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
@@ -70,6 +73,27 @@ static char const StringLengthDataSeparator = ':';
                 }
                 return nil;
             }
+        }
+        
+        // Produce an array of the keys, sorted by their binary NSData representation.
+        NSArray *keys = [keyDataByKey.allKeys sortedArrayUsingComparator:^NSComparisonResult(id key1, id key2) {
+            NSData *obj1 = keyDataByKey[key1];
+            NSData *obj2 = keyDataByKey[key2];
+            int result = memcmp(obj1.bytes, obj2.bytes, MIN(obj1.length, obj2.length));
+            if (result < 0
+                || (result == 0 && obj1.length < obj2.length)) {
+                return NSOrderedAscending;
+            }
+            if (result > 0
+                || (result == 0 && obj1.length > obj2.length)) {
+                return NSOrderedDescending;
+            }
+            return NSOrderedSame;
+        }];
+        
+        NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
+        
+        for (id key in keys) {
             NSError *innerError;
             NSData *data = [self encode:key
                          stringEncoding:stringEncoding
