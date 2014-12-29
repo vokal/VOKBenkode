@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "VOKBenkode"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "An Objective-C library for encoding/decoding objects using Bencoding."
   s.homepage         = "https://github.com/vokalinteractive/VOKBenkode"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
