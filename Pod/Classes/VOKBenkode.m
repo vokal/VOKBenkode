@@ -15,6 +15,20 @@ static char const DictionaryStartDelimiter = 'd';
 static char const EndDelimiter = 'e';
 static char const StringLengthDataSeparator = ':';
 
+static NSComparisonResult CompareNSData(NSData *obj1, NSData *obj2)
+{
+    int result = memcmp(obj1.bytes, obj2.bytes, MIN(obj1.length, obj2.length));
+    if (result < 0
+        || (result == 0 && obj1.length < obj2.length)) {
+        return NSOrderedAscending;
+    }
+    if (result > 0
+        || (result == 0 && obj1.length > obj2.length)) {
+        return NSOrderedDescending;
+    }
+    return NSOrderedSame;
+}
+
 @implementation VOKBenkode
 
 #pragma mark - Encoding
@@ -24,100 +38,29 @@ static char const StringLengthDataSeparator = ':';
              error:(NSError **)error
 {
     if ([obj isKindOfClass:[NSData class]]) {
-        NSMutableData *result = [[[NSString stringWithFormat:@"%@%c", @([obj length]), StringLengthDataSeparator]
-                                  dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
-        [result appendData:obj];
-        return result;
+        return [self encodeData:obj
+                 stringEncoding:stringEncoding
+                          error:error];
     }
     if ([obj isKindOfClass:[NSString class]]) {
-        return [self encode:[obj dataUsingEncoding:stringEncoding]
-             stringEncoding:stringEncoding
-                      error:error];
+        return [self encodeString:obj
+                   stringEncoding:stringEncoding
+                            error:error];
     }
     if ([obj isKindOfClass:[NSNumber class]]) {
-        return [[NSString stringWithFormat:@"%c%ld%c", NumberStartDelimiter, [obj longValue], EndDelimiter]
-                dataUsingEncoding:NSASCIIStringEncoding];
+        return [self encodeNumber:obj
+                   stringEncoding:stringEncoding
+                            error:error];
     }
     if ([obj isKindOfClass:[NSArray class]]) {
-        NSMutableData *result = [NSMutableData dataWithBytes:&ArrayStartDelimiter length:1];
-        for (id innerObj in obj) {
-            NSError *innerError;
-            NSData *data = [self encode:innerObj
-                         stringEncoding:stringEncoding
-                                  error:&innerError];
-            if (!data) {
-                if (error) {
-                    *error = innerError;
-                }
-                return nil;
-            }
-            [result appendData:data];
-        }
-        [result appendBytes:&EndDelimiter length:1];
-        return result;
+        return [self encodeArray:obj
+                  stringEncoding:stringEncoding
+                           error:error];
     }
     if ([obj isKindOfClass:[NSDictionary class]]) {
-        // Construct a dictionary mapping each key to its NSData representation.
-        NSMutableDictionary *keyDataByKey = [NSMutableDictionary dictionaryWithCapacity:[obj count]];
-        for (id key in obj) {
-            if ([key isKindOfClass:[NSData class]]) {
-                keyDataByKey[key] = key;
-            } else if ([key isKindOfClass:[NSString class]]) {
-                keyDataByKey[key] = [key dataUsingEncoding:stringEncoding];
-            } else {
-                // The bencode spec says dictionary keys must be strings (NSData ~= bytestring, so...).
-                if (error) {
-                    *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
-                                                 code:VOKBenkodeErrorDictionaryKeyNotString
-                                             userInfo:nil];
-                }
-                return nil;
-            }
-        }
-        
-        // Produce an array of the keys, sorted by their binary NSData representation.
-        NSArray *keys = [keyDataByKey.allKeys sortedArrayUsingComparator:^NSComparisonResult(id key1, id key2) {
-            NSData *obj1 = keyDataByKey[key1];
-            NSData *obj2 = keyDataByKey[key2];
-            int result = memcmp(obj1.bytes, obj2.bytes, MIN(obj1.length, obj2.length));
-            if (result < 0
-                || (result == 0 && obj1.length < obj2.length)) {
-                return NSOrderedAscending;
-            }
-            if (result > 0
-                || (result == 0 && obj1.length > obj2.length)) {
-                return NSOrderedDescending;
-            }
-            return NSOrderedSame;
-        }];
-        
-        NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
-        
-        for (id key in keys) {
-            NSError *innerError;
-            NSData *data = [self encode:key
-                         stringEncoding:stringEncoding
-                                  error:&innerError];
-            if (!data) {
-                if (error) {
-                    *error = innerError;
-                }
-                return nil;
-            }
-            [result appendData:data];
-            data = [self encode:obj[key]
-                 stringEncoding:stringEncoding
-                          error:&innerError];
-            if (!data) {
-                if (error) {
-                    *error = innerError;
-                }
-                return nil;
-            }
-            [result appendData:data];
-        }
-        [result appendBytes:&EndDelimiter length:1];
-        return result;
+        return [self encodeDictionary:obj
+                       stringEncoding:stringEncoding
+                                error:error];
     }
     
     // Unknown data type.
@@ -149,6 +92,119 @@ static char const StringLengthDataSeparator = ':';
 {
     return [self encode:obj
                   error:NULL];
+}
+
+#pragma mark Encoding Primitives
+
++ (NSData *)encodeDictionary:(NSDictionary *)dictionary
+              stringEncoding:(NSStringEncoding)stringEncoding
+                       error:(NSError **)error
+{
+    NSAssert([dictionary isKindOfClass:[NSDictionary class]], @"Input is not a dictionary.");
+    // Construct a dictionary mapping each key to its NSData representation.
+    NSMutableDictionary *keyDataByKey = [NSMutableDictionary dictionaryWithCapacity:[dictionary count]];
+    for (id key in dictionary) {
+        if ([key isKindOfClass:[NSData class]]) {
+            keyDataByKey[key] = key;
+        } else if ([key isKindOfClass:[NSString class]]) {
+            keyDataByKey[key] = [key dataUsingEncoding:stringEncoding];
+        } else {
+            // The bencode spec says dictionary keys must be strings (NSData ~= bytestring, so...).
+            if (error) {
+                *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                             code:VOKBenkodeErrorDictionaryKeyNotString
+                                         userInfo:nil];
+            }
+            return nil;
+        }
+    }
+    
+    // Produce an array of the keys, sorted by their binary NSData representation.
+    NSArray *keys = [keyDataByKey.allKeys sortedArrayUsingComparator:^NSComparisonResult(id key1, id key2) {
+        return CompareNSData(keyDataByKey[key1], keyDataByKey[key2]);
+    }];
+    
+    NSMutableData *result = [NSMutableData dataWithBytes:&DictionaryStartDelimiter length:1];
+    
+    for (id key in keys) {
+        NSError *innerError;
+        NSData *data = [self encode:key
+                     stringEncoding:stringEncoding
+                              error:&innerError];
+        if (!data) {
+            if (error) {
+                *error = innerError;
+            }
+            return nil;
+        }
+        [result appendData:data];
+        data = [self encode:dictionary[key]
+             stringEncoding:stringEncoding
+                      error:&innerError];
+        if (!data) {
+            if (error) {
+                *error = innerError;
+            }
+            return nil;
+        }
+        [result appendData:data];
+    }
+    [result appendBytes:&EndDelimiter length:1];
+    return result;
+}
+
++ (NSData *)encodeArray:(NSArray *)array
+         stringEncoding:(NSStringEncoding)stringEncoding
+                  error:(NSError **)error
+{
+    NSAssert([array isKindOfClass:[NSArray class]], @"Input is not an array.");
+    NSMutableData *result = [NSMutableData dataWithBytes:&ArrayStartDelimiter length:1];
+    for (id innerObj in array) {
+        NSError *innerError;
+        NSData *data = [self encode:innerObj
+                     stringEncoding:stringEncoding
+                              error:&innerError];
+        if (!data) {
+            if (error) {
+                *error = innerError;
+            }
+            return nil;
+        }
+        [result appendData:data];
+    }
+    [result appendBytes:&EndDelimiter length:1];
+    return result;
+}
+
++ (NSData *)encodeNumber:(NSNumber *)number
+          stringEncoding:(NSStringEncoding)stringEncoding
+                   error:(NSError **)error
+{
+    NSAssert([number isKindOfClass:[NSNumber class]], @"Input is not a number.");
+    return [[NSString stringWithFormat:@"%c%ld%c", NumberStartDelimiter, [number longValue], EndDelimiter]
+            dataUsingEncoding:NSASCIIStringEncoding];
+}
+
++ (NSData *)encodeString:(NSString *)string
+          stringEncoding:(NSStringEncoding)stringEncoding
+                   error:(NSError **)error
+{
+    NSAssert([string isKindOfClass:[NSString class]], @"Input is not a string.");
+    return [self encode:[string dataUsingEncoding:stringEncoding]
+         stringEncoding:stringEncoding
+                  error:error];
+}
+
++ (NSData *)encodeData:(NSData *)data
+        stringEncoding:(NSStringEncoding)stringEncoding
+                 error:(NSError **)error
+{
+    NSAssert([data isKindOfClass:[NSData class]], @"Input is not data.");
+    NSMutableData *result = [[[NSString stringWithFormat:@"%@%c", @([data length]), StringLengthDataSeparator]
+                              dataUsingEncoding:NSASCIIStringEncoding]
+                             mutableCopy];
+    [result appendData:data];
+    return result;
 }
 
 #pragma mark - Decoding
