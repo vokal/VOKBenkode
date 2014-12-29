@@ -472,8 +472,18 @@ stringEncoding:(NSStringEncoding)stringEncoding
     if (length) {
         *length = localLength;
     }
-    return [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(index, stringLength)]
-                                 encoding:stringEncoding];
+    NSData *stringData = [data subdataWithRange:NSMakeRange(index, stringLength)];
+    NSString *result = [[NSString alloc] initWithData:stringData
+                                             encoding:stringEncoding];
+    if (!result) {
+        if (error) {
+            *error = [NSError errorWithDomain:VOKBenkodeErrorDomain
+                                         code:VOKBenkodeErrorStringDataInvalid
+                                     userInfo:nil];
+        }
+        return nil;
+    }
+    return result;
 }
 
 @end
