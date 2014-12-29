@@ -30,10 +30,9 @@ static char const StringLengthDataSeparator = ':';
         return result;
     }
     if ([obj isKindOfClass:[NSString class]]) {
-        NSMutableData *result = [[[NSString stringWithFormat:@"%@%c", @([obj length]), StringLengthDataSeparator]
-                                  dataUsingEncoding:NSASCIIStringEncoding] mutableCopy];
-        [result appendData:[obj dataUsingEncoding:stringEncoding]];
-        return result;
+        return [self encode:[obj dataUsingEncoding:stringEncoding]
+             stringEncoding:stringEncoding
+                      error:error];
     }
     if ([obj isKindOfClass:[NSNumber class]]) {
         return [[NSString stringWithFormat:@"%c%ld%c", NumberStartDelimiter, [obj longValue], EndDelimiter]
