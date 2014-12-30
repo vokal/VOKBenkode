@@ -29,6 +29,8 @@ enum {
     VOKBenkodeErrorStringLengthMalformed,
     /// The length of the string indicates more data than was passed in.
     VOKBenkodeErrorStringLengthExceedsData,
+    /// The data for a particular string could not be decoded.
+    VOKBenkodeErrorStringDataInvalid,
     /// A dictionary key is not a string.
     VOKBenkodeErrorDictionaryKeyNotString,
     /// A dictionary has the same key more than once.

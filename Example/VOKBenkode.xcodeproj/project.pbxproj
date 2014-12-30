@@ -23,6 +23,7 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* VOKBenkodeBasicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */; };
+		71E1AADC1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E1AADB1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m */; };
 		71FB774D1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FB774C1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m */; };
 		71FB77501A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FB774F1A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m */; };
 		71FB77521A4DF5F600A68427 /* VOKBenkodeLibTransmissionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FB77511A4DF5F500A68427 /* VOKBenkodeLibTransmissionTests.m */; };
@@ -64,6 +65,7 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeBasicTests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		71E1AADB1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeDictionaryOrdering.m; sourceTree = "<group>"; };
 		71FB774C1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeS3rvacCppBencodingTests.m; sourceTree = "<group>"; };
 		71FB774E1A4C9AC400A68427 /* VOKBenkodeAssert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKBenkodeAssert.h; sourceTree = "<group>"; };
 		71FB774F1A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeAristotlePagaltzisTests.m; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				71FB774F1A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m */,
 				71FB77511A4DF5F500A68427 /* VOKBenkodeLibTransmissionTests.m */,
 				71FB774C1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m */,
+				71E1AADB1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -386,6 +389,7 @@
 				6003F5BC195388D20070C39A /* VOKBenkodeBasicTests.m in Sources */,
 				71FB77521A4DF5F600A68427 /* VOKBenkodeLibTransmissionTests.m in Sources */,
 				71FB774D1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m in Sources */,
+				71E1AADC1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
