@@ -18,6 +18,15 @@
 
 @implementation VOKBenkodeDictionaryOrdering
 
+- (void)testFoo
+{
+    NSLog(@">>> %@", [[NSString alloc] initWithData:[VOKBenkode encode:@{
+                                                                         @"email": @"user@example.com",
+                                                                         @"password": @"password",
+                                                                         }]
+                                           encoding:NSUTF8StringEncoding]);
+}
+
 - (void)testVariantsOfA
 {
     /* ```python
