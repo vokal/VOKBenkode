@@ -41,7 +41,7 @@
     AssertOriginalMatchesEncodedString(@0, @"i0e");
     
     // no leading zeroes allowed
-    AssertDecodingProducesError(@"i04e");
+    AssertOnlyStrictDecodingProducesError(@"i04e");
 }
 
 - (void)testStr

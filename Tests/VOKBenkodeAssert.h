@@ -27,6 +27,22 @@
         XCTAssertNotNil(error); \
     })
 
+#define AssertOnlyStrictDecodingProducesError(__encodedString) \
+    ({ \
+        NSData *encoded = [(__encodedString) dataUsingEncoding:NSUTF8StringEncoding]; \
+        NSError *error; \
+        /* Regular decoding doesn't produce an error. */ \
+        id decoded = [VOKBenkode decode:encoded error:&error]; \
+        XCTAssertNotNil(decoded); \
+        XCTAssertNil(error); \
+        /* Strict decoding produces an error. */ \
+        decoded = [VOKBenkode decode:encoded \
+                             options:VOKBenkodeDecodeOptionStrict \
+                               error:&error]; \
+        XCTAssertNil(decoded); \
+        XCTAssertNotNil(error); \
+    })
+
 #define AssertBencodedStringAndJsonStringYieldEqualObjects(__encodedString, __jsonString) \
     ({ \
         id bdecoded = [VOKBenkode decode:[(__encodedString) dataUsingEncoding:NSUTF8StringEncoding]]; \

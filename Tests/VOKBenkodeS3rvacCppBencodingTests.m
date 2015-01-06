@@ -139,7 +139,7 @@
 
 - (void)test_DecoderTests_DecodeThrowsDecodingErrorWhenDecodingDictionaryWithKeyNotBeingString
 {
-    AssertDecodingProducesError(@"di1ei2ee");
+    AssertOnlyStrictDecodingProducesError(@"di1ei2ee");
 }
 
 #pragma mark Integer decoding.
@@ -189,7 +189,7 @@
 {
     // From https://wiki.theory.org/BitTorrentSpecification#Bencoding:
     // "Only the significant digits should be used, one cannot pad the Integer with zeroes. such as i04e."
-    AssertDecodingProducesError(@"i001e");
+    AssertOnlyStrictDecodingProducesError(@"i001e");
 }
 
 - (void)test_DecoderTests_DecodeThrowsDecodingErrorWhenDecodingIntegerOfInvalidValue
