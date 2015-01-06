@@ -36,7 +36,7 @@
 		2D0F8899119E65168F499C0A /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		4913B116A0D7E97B14364ED9 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		508665841939CED557A12EFB /* Pods-VOKBenkode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VOKBenkode.release.xcconfig"; path = "Pods/Target Support Files/Pods-VOKBenkode/Pods-VOKBenkode.release.xcconfig"; sourceTree = "<group>"; };
-		711322D31A5BAD49004284A5 /* VOKBenkode-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "VOKBenkode-Example.app"; path = VOKBenkode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		711322D31A5BAD49004284A5 /* VOKBenkode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOKBenkode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		711322D71A5BAD49004284A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		711322D81A5BAD49004284A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		711322D91A5BAD49004284A5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		711322D41A5BAD49004284A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				711322D31A5BAD49004284A5 /* VOKBenkode-Example.app */,
+				711322D31A5BAD49004284A5 /* VOKBenkode.app */,
 				711322E61A5BAD49004284A5 /* Tests.xctest */,
 			);
 			name = Products;
@@ -185,7 +185,7 @@
 			);
 			name = VOKBenkode;
 			productName = "VOKBenkode-Example";
-			productReference = 711322D31A5BAD49004284A5 /* VOKBenkode-Example.app */;
+			productReference = 711322D31A5BAD49004284A5 /* VOKBenkode.app */;
 			productType = "com.apple.product-type.application";
 		};
 		711322E51A5BAD49004284A5 /* Tests */ = {
