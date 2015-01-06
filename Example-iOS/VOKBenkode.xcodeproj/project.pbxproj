@@ -22,11 +22,11 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* VOKBenkodeBasicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */; };
-		71E1AADC1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E1AADB1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m */; };
-		71FB774D1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FB774C1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m */; };
-		71FB77501A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FB774F1A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m */; };
-		71FB77521A4DF5F600A68427 /* VOKBenkodeLibTransmissionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71FB77511A4DF5F500A68427 /* VOKBenkodeLibTransmissionTests.m */; };
+		711322FD1A5BAE00004284A5 /* VOKBenkodeAristotlePagaltzisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 711322F71A5BAE00004284A5 /* VOKBenkodeAristotlePagaltzisTests.m */; };
+		711322FE1A5BAE00004284A5 /* VOKBenkodeBasicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 711322F91A5BAE00004284A5 /* VOKBenkodeBasicTests.m */; };
+		711322FF1A5BAE00004284A5 /* VOKBenkodeDictionaryOrdering.m in Sources */ = {isa = PBXBuildFile; fileRef = 711322FA1A5BAE00004284A5 /* VOKBenkodeDictionaryOrdering.m */; };
+		711323001A5BAE00004284A5 /* VOKBenkodeLibTransmissionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 711322FB1A5BAE00004284A5 /* VOKBenkodeLibTransmissionTests.m */; };
+		711323011A5BAE00004284A5 /* VOKBenkodeS3rvacCppBencodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 711322FC1A5BAE00004284A5 /* VOKBenkodeS3rvacCppBencodingTests.m */; };
 		8BC8CE8DDFA44BE8764CC4E7 /* libPods-VOKBenkode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51EBA4606C2830634F44B0A1 /* libPods-VOKBenkode.a */; };
 /* End PBXBuildFile section */
 
@@ -63,13 +63,13 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeBasicTests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		71E1AADB1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeDictionaryOrdering.m; sourceTree = "<group>"; };
-		71FB774C1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeS3rvacCppBencodingTests.m; sourceTree = "<group>"; };
-		71FB774E1A4C9AC400A68427 /* VOKBenkodeAssert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VOKBenkodeAssert.h; sourceTree = "<group>"; };
-		71FB774F1A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeAristotlePagaltzisTests.m; sourceTree = "<group>"; };
-		71FB77511A4DF5F500A68427 /* VOKBenkodeLibTransmissionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeLibTransmissionTests.m; sourceTree = "<group>"; };
+		711322F71A5BAE00004284A5 /* VOKBenkodeAristotlePagaltzisTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeAristotlePagaltzisTests.m; sourceTree = "<group>"; };
+		711322F81A5BAE00004284A5 /* VOKBenkodeAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOKBenkodeAssert.h; sourceTree = "<group>"; };
+		711322F91A5BAE00004284A5 /* VOKBenkodeBasicTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeBasicTests.m; sourceTree = "<group>"; };
+		711322FA1A5BAE00004284A5 /* VOKBenkodeDictionaryOrdering.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeDictionaryOrdering.m; sourceTree = "<group>"; };
+		711322FB1A5BAE00004284A5 /* VOKBenkodeLibTransmissionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeLibTransmissionTests.m; sourceTree = "<group>"; };
+		711322FC1A5BAE00004284A5 /* VOKBenkodeS3rvacCppBencodingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOKBenkodeS3rvacCppBencodingTests.m; sourceTree = "<group>"; };
 		8A61E8EFC9FCBB0713ADA3D5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		9847B718F456374AEA42835B /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC00C6754A504A6641EEAC51 /* VOKBenkode.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = VOKBenkode.podspec; path = ../VOKBenkode.podspec; sourceTree = "<group>"; };
@@ -178,12 +178,7 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				71FB774E1A4C9AC400A68427 /* VOKBenkodeAssert.h */,
-				6003F5BB195388D20070C39A /* VOKBenkodeBasicTests.m */,
-				71FB774F1A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m */,
-				71FB77511A4DF5F500A68427 /* VOKBenkodeLibTransmissionTests.m */,
-				71FB774C1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m */,
-				71E1AADB1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m */,
+				711322F61A5BAE00004284A5 /* Tests */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -207,6 +202,20 @@
 				8A61E8EFC9FCBB0713ADA3D5 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		711322F61A5BAE00004284A5 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				711322F71A5BAE00004284A5 /* VOKBenkodeAristotlePagaltzisTests.m */,
+				711322F81A5BAE00004284A5 /* VOKBenkodeAssert.h */,
+				711322F91A5BAE00004284A5 /* VOKBenkodeBasicTests.m */,
+				711322FA1A5BAE00004284A5 /* VOKBenkodeDictionaryOrdering.m */,
+				711322FB1A5BAE00004284A5 /* VOKBenkodeLibTransmissionTests.m */,
+				711322FC1A5BAE00004284A5 /* VOKBenkodeS3rvacCppBencodingTests.m */,
+			);
+			name = Tests;
+			path = ../../Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,11 +394,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71FB77501A4DDF0900A68427 /* VOKBenkodeAristotlePagaltzisTests.m in Sources */,
-				6003F5BC195388D20070C39A /* VOKBenkodeBasicTests.m in Sources */,
-				71FB77521A4DF5F600A68427 /* VOKBenkodeLibTransmissionTests.m in Sources */,
-				71FB774D1A4C967500A68427 /* VOKBenkodeS3rvacCppBencodingTests.m in Sources */,
-				71E1AADC1A51FD7A004311E5 /* VOKBenkodeDictionaryOrdering.m in Sources */,
+				711322FF1A5BAE00004284A5 /* VOKBenkodeDictionaryOrdering.m in Sources */,
+				711323001A5BAE00004284A5 /* VOKBenkodeLibTransmissionTests.m in Sources */,
+				711323011A5BAE00004284A5 /* VOKBenkodeS3rvacCppBencodingTests.m in Sources */,
+				711322FD1A5BAE00004284A5 /* VOKBenkodeAristotlePagaltzisTests.m in Sources */,
+				711322FE1A5BAE00004284A5 /* VOKBenkodeBasicTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
