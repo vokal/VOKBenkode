@@ -7,10 +7,6 @@
 
 VOKBenkode provides [bencoding/bdecoding](https://wiki.theory.org/BitTorrentSpecification#Bencoding) in Objective-C.
 
-## Usage
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 ## Installation
 
 VOKBenkode is available through [CocoaPods](http://cocoapods.org). To install
@@ -20,7 +16,7 @@ it, simply add the following line to your Podfile:
 
 ## License
 
-VOKBenkode is available under the MIT. See [the LICENSE file](LICENSE) for more info.
+VOKBenkode is available under the MIT license. See [the LICENSE file](LICENSE) for more info.
 
 ## Unit Tests
 
