@@ -1,6 +1,11 @@
 language: objective-c
-xcode_workspace: Example/VOKBenkode.xcworkspace
-xcode_scheme: VOKBenkode-Example
-xcode_sdk: iphonesimulator
 before_install:
   - brew update > /dev/null; if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+matrix:
+    include:
+        - xcode_workspace: Example-iOS/VOKBenkode.xcworkspace
+          xcode_scheme: VOKBenkode-Example
+          xcode_sdk: iphonesimulator
+        - xcode_workspace: Example-OSX/VOKBenkode.xcworkspace
+          xcode_scheme: VOKBenkode-Example
+          xcode_sdk: macosx
