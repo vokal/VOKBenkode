@@ -1,6 +1,6 @@
 # VOKBenkode
 
-[![CI Status](http://img.shields.io/travis/vokalinteractive/VOKBenkode.svg?style=flat)](https://travis-ci.org/vokalinteractive/VOKBenkode)
+[![CI Status](http://img.shields.io/travis/vokal/VOKBenkode.svg?style=flat)](https://travis-ci.org/vokal/VOKBenkode)
 [![Version](https://img.shields.io/cocoapods/v/VOKBenkode.svg?style=flat)](http://cocoadocs.org/docsets/VOKBenkode)
 [![License](https://img.shields.io/cocoapods/l/VOKBenkode.svg?style=flat)](http://cocoadocs.org/docsets/VOKBenkode)
 [![Platform](https://img.shields.io/cocoapods/p/VOKBenkode.svg?style=flat)](http://cocoadocs.org/docsets/VOKBenkode)
