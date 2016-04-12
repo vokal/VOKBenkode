@@ -1,5 +1,5 @@
 PODS:
-  - VOKBenkode (0.2.1)
+  - VOKBenkode (0.3.0)
 
 DEPENDENCIES:
   - VOKBenkode (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  VOKBenkode: 7a7d37cc3099f64289498fd9c384b416f4f338b7
+  VOKBenkode: 272b78425bbeca87d0e2fc0809ffc041f88f8cd1
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.39.0

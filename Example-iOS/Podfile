@@ -7,3 +7,8 @@ end
 target 'Tests', :exclusive => true do
   pod "VOKBenkode", :path => "../"
 end
+
+target 'Tests-tvOS' do
+  platform :tvos, '9.0'
+  pod "VOKBenkode", :path => "../"
+end
