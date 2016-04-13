@@ -1,4 +1,5 @@
 language: objective-c
+osx_image: xcode7.3
 before_install:
   - brew update > /dev/null; if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
 matrix:
@@ -6,6 +7,9 @@ matrix:
         - xcode_workspace: Example-iOS/VOKBenkode.xcworkspace
           xcode_scheme: VOKBenkode-Example
           xcode_sdk: iphonesimulator
+        - xcode_workspace: Example-iOS/VOKBenkode.xcworkspace
+          xcode_scheme: VOKBenkode-tvOS
+          xcode_sdk: appletvsimulator
         - xcode_workspace: Example-OSX/VOKBenkode.xcworkspace
           xcode_scheme: VOKBenkode-Example
           xcode_sdk: macosx
