@@ -16,6 +16,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*.gcno
+*.xcscmblueprint
 
 # CocoaPods
 #
@@ -24,3 +26,12 @@ DerivedData
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
 # Pods/
+
+# Exported environment variables for XcodeCoverage
+env.sh
+
+# OS X Finder stuff
+.DS_Store
+
+# Default output directory for scan
+test_output

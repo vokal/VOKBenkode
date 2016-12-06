@@ -1,15 +1,15 @@
 language: objective-c
 osx_image: xcode7.3
-before_install:
-  - brew update > /dev/null; if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
-matrix:
-    include:
-        - xcode_workspace: Example-iOS/VOKBenkode.xcworkspace
-          xcode_scheme: VOKBenkode-Example
-          xcode_sdk: iphonesimulator
-        - xcode_workspace: Example-iOS/VOKBenkode.xcworkspace
-          xcode_scheme: VOKBenkode-tvOS
-          xcode_sdk: appletvsimulator
-        - xcode_workspace: Example-OSX/VOKBenkode.xcworkspace
-          xcode_scheme: VOKBenkode-Example
-          xcode_sdk: macosx
+env:
+  global:
+    - SCAN_SKIP_BUILD=1
+  matrix:
+    # Define the details for each test suite that should be run
+    - SCAN_WORKSPACE="Example-iOS/VOKBenkode.xcworkspace" SCAN_SCHEME="VOKBenkode-Example" SCAN_SDK="iphonesimulator"
+    - SCAN_WORKSPACE="Example-iOS/VOKBenkode.xcworkspace" SCAN_SCHEME="VOKBenkode-tvOS"    SCAN_SDK="appletvsimulator"
+    - SCAN_WORKSPACE="Example-OSX/VOKBenkode.xcworkspace" SCAN_SCHEME="VOKBenkode-Example" SCAN_SDK="macosx"
+script: bundle exec scan
+after_script:
+  - bundle exec pod lib lint
+cache:
+  - bundler  # After main-repo builds, save the "bundler" (local Ruby gems) stuff to cache for future builds.
